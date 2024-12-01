@@ -31,6 +31,35 @@ namespace Mastermind
             InitializeComponent();
             RandomColors();
             ComboBoxes();
+
+            this.KeyDown += new KeyEventHandler(MainWindow_KeyDown);
+        }
+       
+        
+        // Event handler voor de toetscombinatie CTRL+F12
+        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Controleer of CTRL+F12 is ingedrukt
+            if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) && e.Key == Key.F12)
+            {
+                ToggleDebug(); 
+            }
+        }
+       
+        
+        // Methode om debug-modus in te schakelen of uit te schakelen
+        private void ToggleDebug()
+        {
+            // Als de debugTextBox zichtbaar is, verberg het en anders toon je de textbox
+            if (debugTextBox.Visibility == Visibility.Collapsed)
+            {
+                debugTextBox.Visibility = Visibility.Visible;
+                debugTextBox.Text = colorCodeString;
+            }
+            else
+            {
+                debugTextBox.Visibility = Visibility.Collapsed;
+            }
         }
         private void RandomColors()
         {
@@ -126,7 +155,7 @@ namespace Mastermind
 
             //Hier updaten we de attempts in de 
             attempts++;
-            Title = $"Mastermind - Code: {colorCodeString} | Poging {attempts}";
-        }    
+            Title = $"Mastermind - Poging {attempts}";
+        }
     }
 }
