@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Mastermind
 {
@@ -17,6 +18,11 @@ namespace Mastermind
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        //timer voor tijd bij te houden
+        private DispatcherTimer countdownTimer;
+        private int countdownTime = 0;
+
         //lijst aanmaken voor de verschillende kleuren
         List<string> colors = new List<string> { "Red", "Yellow", "Orange", "White", "Green", "Blue" };
         List<string> chosenColors = new List<string>();
@@ -29,13 +35,35 @@ namespace Mastermind
         public MainWindow()
         {
             InitializeComponent();
-            RandomColors();
+            
+
+            //hier timer initialiseren
+            countdownTimer = new DispatcherTimer();
+            countdownTimer.Interval = TimeSpan.FromSeconds(1);//elke seconden ticken
+            countdownTimer.Tick += CountdownTimer_Tick;
+
             ComboBoxes();
+
+            RandomColors();
 
             this.KeyDown += new KeyEventHandler(MainWindow_KeyDown);
         }
-       
-        
+        // Methode om de countdown timer te starten (of opnieuw te starten)
+        private void startCountdown()
+        {
+            countdownTime = 1;  // Zet de tijd op 1 seconde bij elke start
+            countdownTimer.Start(); // Start de timer
+            timerLabel.Content = $"Tijd: {countdownTime} sec";  // Toon de timer op de UI
+        }
+
+        // Event handler voor de countdown timer
+        private void CountdownTimer_Tick(object sender, EventArgs e)
+        {
+            countdownTime++;  // Verhoog de tijd elke seconde
+            timerLabel.Content = $"Tijd: {countdownTime} sec";  // Werk de timer bij in de UI
+        }
+
+
         // Event handler voor de toetscombinatie CTRL+F12
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
@@ -76,12 +104,13 @@ namespace Mastermind
             
             }
             string colorstring = string.Join(",", chosenColors);
-            Title = "Mastermind: " + colorstring;
 
             //titel updaten met de code
             colorCodeString = string.Join(",", chosenColors);
 
-            Title = $"Mastermind - Code: {colorCodeString} | Poging {attempts}";
+            Title = $"Mastermind - Poging {attempts}";
+
+            startCountdown();
         }
 
         private void ComboBoxes()
@@ -156,6 +185,8 @@ namespace Mastermind
             //Hier updaten we de attempts in de 
             attempts++;
             Title = $"Mastermind - Poging {attempts}";
+
+            startCountdown();
         }
     }
 }

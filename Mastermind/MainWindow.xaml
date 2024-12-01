@@ -17,6 +17,7 @@
         <Label Name="label3" Content="" HorizontalAlignment="Left" Margin="440,135,0,0" VerticalAlignment="Top" Width="124" Height="125" BorderBrush="Black" BorderThickness="3"/>
         <Label Name="label4" Content="" HorizontalAlignment="Left" Margin="622,135,0,0" VerticalAlignment="Top" Width="124" Height="125" BorderBrush="Black" BorderThickness="3"/>
         <TextBox Name="debugTextBox" HorizontalAlignment="Center" Margin="0,25,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="348" Visibility="Collapsed" IsReadOnly="True"/>
+        <Label Name="timerLabel" Content="" HorizontalAlignment="Left" Margin="58,19,0,0" VerticalAlignment="Top" Width="116"/>
 
     </Grid>
 </Window>
