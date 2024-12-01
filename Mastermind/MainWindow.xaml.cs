@@ -49,6 +49,7 @@ namespace Mastermind
             string colorstring = string.Join(",", chosenColors);
             Title = "Mastermind: " + colorstring;
 
+            //titel updaten met de code
             colorCodeString = string.Join(",", chosenColors);
 
             Title = $"Mastermind - Code: {colorCodeString} | Poging {attempts}";
