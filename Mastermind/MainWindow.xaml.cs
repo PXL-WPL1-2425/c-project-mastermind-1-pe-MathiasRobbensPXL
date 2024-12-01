@@ -22,6 +22,7 @@ namespace Mastermind
         //timer voor tijd bij te houden
         private DispatcherTimer countdownTimer;
         private int countdownTime = 0;
+        
 
         //lijst aanmaken voor de verschillende kleuren
         List<string> colors = new List<string> { "Red", "Yellow", "Orange", "White", "Green", "Blue" };
@@ -52,15 +53,34 @@ namespace Mastermind
         private void startCountdown()
         {
             countdownTime = 1;  // Zet de tijd op 1 seconde bij elke start
+            
             countdownTimer.Start(); // Start de timer
-            timerLabel.Content = $"Tijd: {countdownTime} sec";  // Toon de timer op de UI
+            timerLabel.Content = $"Tijd: {countdownTime} sec";
+        }
+
+        private void StopCountdown()
+        {
+            countdownTimer.Stop();
+            // Verhoog het aantal pogingen (beurten)
+            attempts++;
+            Title = $"Mastermind - Poging {attempts}";
+            
+            countdownTime = 0;
+            timerLabel.Content = $"Tijd: {countdownTime} sec";
+            startCountdown();  
         }
 
         // Event handler voor de countdown timer
         private void CountdownTimer_Tick(object sender, EventArgs e)
         {
-            countdownTime++;  // Verhoog de tijd elke seconde
-            timerLabel.Content = $"Tijd: {countdownTime} sec";  // Werk de timer bij in de UI
+            countdownTime++;
+
+            if (countdownTime >= 10)
+            {
+                StopCountdown();
+            }
+
+            timerLabel.Content = $"Tijd: {countdownTime} sec";
         }
 
 
@@ -182,11 +202,9 @@ namespace Mastermind
             if (selectedColor4 == chosenColors[3]) label4.BorderBrush = new SolidColorBrush(Colors.DarkRed); 
             else if (chosenColors.Contains(selectedColor4)) label4.BorderBrush = new SolidColorBrush(Colors.Wheat); 
 
-            //Hier updaten we de attempts in de 
-            attempts++;
-            Title = $"Mastermind - Poging {attempts}";
+           
 
-            startCountdown();
+            StopCountdown();
         }
     }
 }
