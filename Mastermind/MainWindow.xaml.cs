@@ -22,7 +22,7 @@ namespace Mastermind
         //timer voor tijd bij te houden
         private DispatcherTimer countdownTimer;
         private int countdownTime = 0;
-        
+
 
         //lijst aanmaken voor de verschillende kleuren
         List<string> colors = new List<string> { "Red", "Yellow", "Orange", "White", "Green", "Blue" };
@@ -36,7 +36,7 @@ namespace Mastermind
         public MainWindow()
         {
             InitializeComponent();
-            
+
 
             //hier timer initialiseren
             countdownTimer = new DispatcherTimer();
@@ -50,14 +50,21 @@ namespace Mastermind
             this.KeyDown += new KeyEventHandler(MainWindow_KeyDown);
         }
         // Methode om de countdown timer te starten (of opnieuw te starten)
+        /// <summary>
+        /// Starten en herstarten van de countdowntimer
+        /// Waarde van de timer tickt met 1 seconden verder omhoog
+        /// </summary>
         private void startCountdown()
         {
             countdownTime = 1;  // Zet de tijd op 1 seconde bij elke start
-            
+
             countdownTimer.Start(); // Start de timer
             timerLabel.Content = $"Tijd: {countdownTime} sec";
         }
-
+        /// <summary>
+        /// Stopt de countdowntimer en verhoogt het aantal pogingen 
+        /// Timer stopt en wordt gereset naar 0, titel wordt bijgewerkt naar een nieuwe poging
+        /// </summary>
         private void StopCountdown()
         {
             countdownTimer.Stop();
@@ -93,9 +100,13 @@ namespace Mastermind
                 ToggleDebug(); 
             }
         }
-       
-        
-        // Methode om debug-modus in te schakelen of uit te schakelen
+
+
+
+        /// <summary>
+        /// Hier wordt de verborgen label weergegeven die de kleurcode voorziet van het spel
+        /// Als de debugTextBox zichtbaar is, wordt deze verborgen.
+        /// </summary>
         private void ToggleDebug()
         {
             // Als de debugTextBox zichtbaar is, verberg het en anders toon je de textbox
